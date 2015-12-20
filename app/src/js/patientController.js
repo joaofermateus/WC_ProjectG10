@@ -16,12 +16,15 @@ app.controller('patientController', function($scope, $http) {
 
 	$scope.patientActs = [];
 
+	$scope.doctorRequests = [];
+
 	$scope.loggedIn = false;
 
 	$scope.currentUser = '';
 	$scope.rememberMe = false;
 	$scope.rememberUser = '';
 
+	$scope.currentDoctor = { "docID": 1, "name": "João Santos", "speciality": "Ortopedia", "user": "doc1", "pass": "pass"};
 	$scope.doctorName = "House";
 	$scope.currentPatient = {"patID":0,"name":"Tomás Silva","policy_number":1000,"policy_type":0};
 
@@ -47,6 +50,14 @@ app.controller('patientController', function($scope, $http) {
 				}
 			});
 
+		});
+	}
+
+	$scope.changeDoctor = function() {
+		$scope.doctors.forEach(function(doctor) {
+			if ($scope.currentUser === doctor.user) {
+				$scope.currentDoctor = doctor;
+			}
 		});
 	}
 
