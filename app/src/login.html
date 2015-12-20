@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+		<script src="js/myApp.js"></script>
+		<script src="js/patientController.js"></script>
+		<title> Doctor Portal's Home </title>
+	</head>
+
+	<body ng-app="myApp" ng-controller="patientController">
+
+		<!--Start of Log In page-->
+		<div ng-show="!loggedIn" class="container">
+			<div class="text-center">
+				<h1>Doctor Portal <small>Doctor Portal Login</small></h1>
+			</div>
+			<!--<p>{{test}} + " " + {{users}}</p>-->
+			<form ng-submit="loggedIn=true" class="form-horizontal" role="form">
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="username">Username:</label>
+					<div class="col-sm-8">
+						<input ng-model="currentUser" type="text" class="form-control" id="username" placeholder="Enter username" required />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="pwd">Password:</label>
+					<div class="col-sm-8">          
+						<input type="password" class="form-control" id="pwd" placeholder="Enter password" />
+					</div>
+				</div>
+				<div class="form-group">        
+					<div class="col-sm-offset-2 col-sm-8">
+						<div class="checkbox">
+							<label><input ng-model="rememberMe" type="checkbox" /> Remember me</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">        
+					<div class="col-sm-offset-2 col-sm-8">
+						<button type="submit" class="btn">Log in</button>
+					</div>
+				</div>
+				<div class="col-sm-offset-2 col-sm-8">
+					(Forgot your password!)	
+				</div>
+			</form>
+		</div>
+		<!--End of Log In page-->
+
+
+		<!--Clear code below after joining with the other pages-->
+		<div ng-show="loggedIn" class="container alert alert-success">
+			<p>Successfully logged in!</p>
+			<button class="btn" ng-click="loggedIn=false">Back</button>
+		</div>
+		<!--Clear the above block-->
+
+
+	</body>
+</html>
