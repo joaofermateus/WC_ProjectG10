@@ -17,15 +17,13 @@
 
 	<body ng-app="myApp" ng-controller="patientController">
 
-		<p> GitHub test </p>
-
 		<!--Start of Log In page-->
 		<div ng-show="!loggedIn" class="container">
 			<div class="text-center">
 				<h1>Doctor Portal <small>Doctor Portal Login</small></h1>
 			</div>
 			<!--<p>{{test}} + " " + {{users}}</p>-->
-			<form ng-submit="loggedIn=true" class="form-horizontal" role="form">
+			<form ng-submit="loggedIn=true" class="form-horizontal" name="logForm" role="form">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="username">Username:</label>
 					<div class="col-sm-8">
@@ -94,7 +92,6 @@
 
 			<!--Start of container-->
 			<div class="container">
-
 				<!--Left Side of the Screen-->
 				<div class="row">
 					<div class="col-sm-5" ng-show="loggedIn">
@@ -177,7 +174,7 @@
 
 			<!-- Modal -->
 			<div class="modal fade" id="myModal" role="dialog">
-				<div class="modal-dialog">
+				<div class="modal-dialog-lg">
 
 					<!-- Modal content-->
 					<div class="modal-content">
@@ -215,15 +212,21 @@
 										<thead>
 											<tr>
 												<th>ActID</th>
-												<th>Name</th>
+												<th>ActName</th>
+												<th>Date</th>
+												<th>Doctor Name</th>
 												<th>Cost</th>
+												<th>Reimbursement</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr style="cursor: pointer;" ng-repeat="act in acts">
+											<tr style="cursor: pointer;" ng-repeat="act in patientActs">
 												<td>{{act.actID}}</td>
-												<td>{{act.name}}</td>
+												<td>{{act.actName}}</td>
+												<td>{{act.date}}</td>
+												<td>{{act.docName}}</td>
 												<td>{{act.cost}}</td>
+												<td>{{act.actual_reimb_perc}}</td>
 												<td><span class="glyphicon glyphicon-minus"></span></td>
 											</tr>
 										</tbody>
