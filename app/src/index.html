@@ -127,10 +127,26 @@
 										</a>
 									</h4>
 								</div>
-								<div id="collapseOne" class="panel-collapse collapse in">
+								<div id="collapseOne" class="panel-collapse collapse">
 									<div class="panel-body">
 										<ul class="list-group" >
 											<li ng-repeat="r in requests | filter:{status:'PENDING'}" class="list-group-item">ReqID: {{r.reqID}} RepID: {{r.repID}} Status: {{r.status}}</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading accordion-toggle" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+									<h4 class="panel-title">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+											Requested
+										</a>
+									</h4>
+								</div>
+								<div id="collapseFour" class="panel-collapse collapse">
+									<div class="panel-body">
+										<ul class="list-group" >
+											<li ng-repeat="r in requests | filter:{status:'REQUESTED'}" class="list-group-item">ReqID: {{r.reqID}} RepID: {{r.repID}} Status: {{r.status}}</li>
 										</ul>
 									</div>
 								</div>
