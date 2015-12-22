@@ -17,15 +17,13 @@
 
 	<body ng-app="myApp" ng-controller="patientController">
 
-		<p> GitHub test </p>
-
 		<!--Start of Log In page-->
 		<div ng-show="!loggedIn" class="container">
 			<div class="text-center">
 				<h1>Doctor Portal <small>Doctor Portal Login</small></h1>
 			</div>
 			<!--<p>{{test}} + " " + {{users}}</p>-->
-			<form ng-submit="loggedIn=true" class="form-horizontal" role="form">
+			<form ng-submit="login()" class="form-horizontal" name="logForm" role="form">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="username">Username:</label>
 					<div class="col-sm-8">
@@ -35,7 +33,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="pwd">Password:</label>
 					<div class="col-sm-8">
-						<input type="password" class="form-control" id="pwd" placeholder="Enter password" />
+						<input type="password" ng-model="password" class="form-control" id="pwd" placeholder="Enter password" required/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -47,7 +45,7 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
-						<button type="submit" class="btn">Log in</button>
+						<button ng-click="changeDoctor()"type="submit" class="btn">Log in</button>
 					</div>
 				</div>
 				<div class="col-sm-offset-2 col-sm-8">
@@ -76,7 +74,7 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav navbar-right">
-							<li><a>Welcome Dr.{{doctorName}}</a></li>
+							<li><a>Welcome Dr. {{currentDoctor.name}}</a></li>
 							<li>
 								<form class="navbar-form navbar-left" role="search">
 									<div class="form-group has-feedback">
@@ -94,7 +92,6 @@
 
 			<!--Start of container-->
 			<div class="container">
-
 				<!--Left Side of the Screen-->
 				<div class="row">
 					<div class="col-sm-5" ng-show="loggedIn">
@@ -130,10 +127,26 @@
 										</a>
 									</h4>
 								</div>
-								<div id="collapseOne" class="panel-collapse collapse in">
+								<div id="collapseOne" class="panel-collapse collapse">
 									<div class="panel-body">
 										<ul class="list-group" >
 											<li ng-repeat="r in requests | filter:{status:'PENDING'}" class="list-group-item">ReqID: {{r.reqID}} RepID: {{r.repID}} Status: {{r.status}}</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading accordion-toggle" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+									<h4 class="panel-title">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+											Requested
+										</a>
+									</h4>
+								</div>
+								<div id="collapseFour" class="panel-collapse collapse">
+									<div class="panel-body">
+										<ul class="list-group" >
+											<li ng-repeat="r in requests | filter:{status:'REQUESTED'}" class="list-group-item">ReqID: {{r.reqID}} RepID: {{r.repID}} Status: {{r.status}}</li>
 										</ul>
 									</div>
 								</div>
@@ -177,7 +190,7 @@
 
 			<!-- Modal -->
 			<div class="modal fade" id="myModal" role="dialog">
-				<div class="modal-dialog">
+				<div class="modal-dialog-lg">
 
 					<!-- Modal content-->
 					<div class="modal-content">
@@ -210,24 +223,56 @@
 
 								</div>
 								<div class="col-sm-7">
-									<h2>Medical Acts</h2>
+									<h2>Past Medical Acts</h2>
 									<table class="table">
 										<thead>
 											<tr>
 												<th>ActID</th>
-												<th>Name</th>
+												<th>ActName</th>
+												<th>Date</th>
+												<th>Doctor Name</th>
+												<th>Cost</th>
+												<th>Reimbursement</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr style="cursor: pointer;" ng-repeat="act in patientActs">
+												<td>{{act.actID}}</td>
+												<td>{{act.actName}}</td>
+												<td>{{act.date}}</td>
+												<td>{{act.docName}}</td>
+												<td>{{act.cost}}</td>
+												<td>{{act.actual_reimb_perc}}</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<h2>Prescribed Medical Acts</h2>
+									<table class="table">
+										<thead>
+											<tr>
+												<th>ActID</th>
+												<th>ActName</th>
 												<th>Cost</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr style="cursor: pointer;" ng-repeat="act in acts">
+											<tr style="cursor: pointer;" ng-repeat="act in currentPatient.acts track by $index">
 												<td>{{act.actID}}</td>
 												<td>{{act.name}}</td>
 												<td>{{act.cost}}</td>
-												<td><span class="glyphicon glyphicon-minus"></span></td>
+												<td ng-click="removeMedicalAct($index)"><span class="glyphicon glyphicon-minus"></span></td>
 											</tr>
 										</tbody>
 									</table>
+
+									<div class="dropdown">
+								    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Act Type
+								    <span class="caret"></span></button>
+								    <ul class="dropdown-menu">
+								      <li ng-click="addMedicalAct(act.name)" ng-repeat="act in acts"><a href="#">{{act.name}}</a></li>
+								    </ul>
+								  </div>
 
 								</div>
 							</div>
