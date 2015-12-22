@@ -190,7 +190,7 @@
 
 			<!-- Modal -->
 			<div class="modal fade" id="myModal" role="dialog">
-				<div class="modal-dialog-lg">
+				<div class="modal-dialog-md">
 
 					<!-- Modal content-->
 					<div class="modal-content">
@@ -223,6 +223,32 @@
 
 								</div>
 								<div class="col-sm-7">
+									<h2>Prescribed Medical Acts</h2>
+									<table class="table">
+										<thead>
+											<tr>
+												<th>ActID</th>
+												<th>ActName</th>
+												<th>Cost</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr style="cursor: pointer;" ng-repeat="act in currentPatient.acts track by $index">
+												<td>{{act.actID}}</td>
+												<td>{{act.name}}</td>
+												<td>{{act.cost}}</td>
+												<td ng-click="removeMedicalAct($index)"><span class="glyphicon glyphicon-minus"></span></td>
+											</tr>
+										</tbody>
+									</table>
+
+									<div class="dropdown">
+								    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Act Type
+								    <span class="caret"></span></button>
+								    <ul class="dropdown-menu">
+								      <li ng-click="addMedicalAct(act.name)" ng-repeat="act in acts | orderBy:cost"><a href="#">{{act.name}}</a></li>
+								    </ul>
+								  </div>
 									<h2>Past Medical Acts</h2>
 									<table class="table">
 										<thead>
@@ -247,39 +273,12 @@
 										</tbody>
 									</table>
 
-									<h2>Prescribed Medical Acts</h2>
-									<table class="table">
-										<thead>
-											<tr>
-												<th>ActID</th>
-												<th>ActName</th>
-												<th>Cost</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr style="cursor: pointer;" ng-repeat="act in currentPatient.acts track by $index">
-												<td>{{act.actID}}</td>
-												<td>{{act.name}}</td>
-												<td>{{act.cost}}</td>
-												<td ng-click="removeMedicalAct($index)"><span class="glyphicon glyphicon-minus"></span></td>
-											</tr>
-										</tbody>
-									</table>
-
-									<div class="dropdown">
-								    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Act Type
-								    <span class="caret"></span></button>
-								    <ul class="dropdown-menu">
-								      <li ng-click="addMedicalAct(act.name)" ng-repeat="act in acts"><a href="#">{{act.name}}</a></li>
-								    </ul>
-								  </div>
-
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-success pull-center" data-dismiss="modal">Save</button> <!--TODO-->
+							<button type="button" class="btn btn-success pull-center" ng-click="currentPatient.acts=[]" data-dismiss="modal">Submit</button> <!--TODO-->
 						</div>
 					</div>
 
