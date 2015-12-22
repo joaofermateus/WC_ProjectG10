@@ -14,23 +14,36 @@ app.controller('patientController', function($scope, $http) {
 	$http.get("https://raw.githubusercontent.com/sise-cweb/data-gen/master/doctors.json")
 	.then(function (response) {$scope.doctors = response.data;});
 
+	$scope.currentActNumber = 0;
+
 	$scope.patientActs = [];
 
-	$scope.doctorRequests = [];
+	$scope.prescribedActs = [];
 
 	$scope.loggedIn = false;
+
+	$scope.login = function() {
+		$scope.loggedIn = false;
+		$scope.doctors.forEach(function(entry) {
+			if (entry.user === $scope.currentUser && entry.pass===$scope.password) {
+				$scope.loggedIn = true;
+				$scope.currentDoctor = entry;
+			}
+		});
+	}
 
 	$scope.currentUser = '';
 	$scope.rememberMe = false;
 	$scope.rememberUser = '';
 
-	$scope.currentDoctor = { "docID": 1, "name": "João Santos", "speciality": "Ortopedia", "user": "doc1", "pass": "pass"};
-	$scope.doctorName = "House";
+
 	$scope.currentPatient = {"patID":0,"name":"Tomás Silva","policy_number":1000,"policy_type":0};
+	$scope.test = $scope.currentPatient.hasOwnProperty('acts');
 
 	$scope.changePatient = function(patient) {
 		$scope.currentPatient = patient;
 		$scope.patientActs = [];
+		$scope.prescribedActs = [];
 		$scope.reports.forEach(function(entry) {
 			if (patient.patID === entry.patID) {
 				$scope.patientActs.push(entry);
@@ -49,14 +62,29 @@ app.controller('patientController', function($scope, $http) {
 					act.cost = act1.cost;
 				}
 			});
-
 		});
 	}
 
-	$scope.changeDoctor = function() {
-		$scope.doctors.forEach(function(doctor) {
-			if ($scope.currentUser === doctor.user) {
-				$scope.currentDoctor = doctor;
+	$scope.addMedicalAct = function() {
+		$scope.acts.forEach(function(entry) {
+			if (entry.actID == $scope.currentActNumber) {
+				if($scope.currentPatient.hasOwnProperty('acts')){
+					$scope.currentPatient.acts.push(entry);
+					$scope.currentPatient.acts.count+=1
+					$scope.test = true;
+				} else {
+					$scope.prescribedActs.push(entry);
+					$scope.currentPatient.acts = $scope.prescribedActs;
+					$scope.currentPatient.acts.count = 0;
+				}
+			}
+		});
+	}
+
+	$scope.removeMedicalAct = function() {
+		$scope.acts.forEach(function(entry) {
+			if (entry.actID == $scope.currentActNumber) {
+				$scope.prescribedActs.push(entry);
 			}
 		});
 	}

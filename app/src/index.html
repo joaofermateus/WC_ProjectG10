@@ -23,7 +23,7 @@
 				<h1>Doctor Portal <small>Doctor Portal Login</small></h1>
 			</div>
 			<!--<p>{{test}} + " " + {{users}}</p>-->
-			<form ng-submit="loggedIn=true" class="form-horizontal" name="logForm" role="form">
+			<form ng-submit="login()" class="form-horizontal" name="logForm" role="form">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="username">Username:</label>
 					<div class="col-sm-8">
@@ -33,7 +33,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="pwd">Password:</label>
 					<div class="col-sm-8">
-						<input type="password" class="form-control" id="pwd" placeholder="Enter password" />
+						<input type="password" ng-model="password" class="form-control" id="pwd" placeholder="Enter password" required/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -74,7 +74,7 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav navbar-right">
-							<li><a>Welcome Dr.{{currentDoctor.name}}</a></li>
+							<li><a>Welcome Dr. {{currentDoctor.name}}</a></li>
 							<li>
 								<form class="navbar-form navbar-left" role="search">
 									<div class="form-group has-feedback">
@@ -223,7 +223,7 @@
 
 								</div>
 								<div class="col-sm-7">
-									<h2>Medical Acts</h2>
+									<h2>Past Medical Acts</h2>
 									<table class="table">
 										<thead>
 											<tr>
@@ -243,10 +243,41 @@
 												<td>{{act.docName}}</td>
 												<td>{{act.cost}}</td>
 												<td>{{act.actual_reimb_perc}}</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<h2>Prescribed Medical Acts</h2>
+									<table class="table">
+										<thead>
+											<tr>
+												<th>ActID</th>
+												<th>ActName</th>
+												<th>Cost</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr style="cursor: pointer;" ng-repeat="act in currentPatient.acts track by $index">
+												<td>{{act.actID}}</td>
+												<td>{{act.name}}</td>
+												<td>{{act.cost}}</td>
 												<td><span class="glyphicon glyphicon-minus"></span></td>
 											</tr>
 										</tbody>
 									</table>
+
+									<form class="form-inline" role="form">
+									  <div class="form-group">
+									    <label class="sr-only" for="act">Act</label>
+									    <input type="text" ng-model="currentActNumber" class="form-control" id="act">
+									  </div>
+									  <button type="submit" ng-click="addMedicalAct()" class="btn btn-default">Add</button>
+										{{currentActNumber}}
+										{{prescribedActs}}
+										{{test}}
+										{{currentPatient.acts}}
+										{{currentPatient.acts.count}}
+									</form>
 
 								</div>
 							</div>
