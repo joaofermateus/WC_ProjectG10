@@ -8,13 +8,16 @@ app.controller('patientController', function($scope, $http) {
 	$http.get("https://raw.githubusercontent.com/sise-cweb/data-gen/master/acts.json")
 	.then(function (response) {$scope.acts = response.data;});
 
+	$http.get("https://raw.githubusercontent.com/sise-cweb/data-gen/master/acts-rmb.json")
+	.then(function (response) {$scope.acts_rmb = response.data;});
+
 	$http.get("https://raw.githubusercontent.com/sise-cweb/data-gen/master/reports.json")
 	.then(function (response) {$scope.reports = response.data;});
 
 	$http.get("https://raw.githubusercontent.com/sise-cweb/data-gen/master/doctors.json")
 	.then(function (response) {$scope.doctors = response.data;});
 
-	$scope.currentActName = 0;
+	$scope.currentActName = '';
 
 	$scope.patientActs = [];
 
@@ -66,23 +69,38 @@ app.controller('patientController', function($scope, $http) {
 	}
 
 	$scope.addMedicalAct = function(actName) {
-		$scope.acts.forEach(function(entry) {
-			if (entry.name == actName) {
-				if($scope.currentPatient.hasOwnProperty('acts')){
-					$scope.currentPatient.acts.push(entry);
-					$scope.currentPatient.acts.count+=1
-					$scope.test = true;
-				} else {
-					$scope.prescribedActs.push(entry);
-					$scope.currentPatient.acts = $scope.prescribedActs;
-					$scope.currentPatient.acts.count = 0;
-				}
-			}
+		if(!$scope.currentPatient.hasOwnProperty('acts')){
+			$scope.currentPatient.acts=[];
+		}
+		var actID = '';
+		var actEntry = '';
+		$scope.acts.forEach(function(act) {
+		if (act.name == actName) {
+				actEntry = act;
+				actID = act.actID;
+		}
 		});
+
+		$scope.acts_rmb.forEach(function(act_rmb) {
+			if (actID == act_rmb.actID && $scope.currentPatient.policy_type == act_rmb.policy_type) {
+				actEntry.rmb = act_rmb.reimb_percentage;
+			}
+
+
+		});
+
+		$scope.currentPatient.acts.push(actEntry);
 	}
 
 	$scope.removeMedicalAct = function(index) {
 		$scope.currentPatient.acts.splice(index, 1);
+	}
+
+	$scope.filterRequests = function(filter) {
+		var temp = $scope.requests.filter(function(entry) {
+			return entry.status==filter;
+		});
+		return temp.length;
 	}
 
 		$scope.searchVar = "";

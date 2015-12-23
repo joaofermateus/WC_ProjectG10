@@ -1,121 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-		<link rel="stylesheet" type="text/css" href="css/main.css"/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/main.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
-		<script src="js/myApp.js"></script>
-		<script src="js/patientController.js"></script>
-		<title> Doctor Portal's Home </title>
-	</head>
+	<script src="js/myApp.js"></script>
+	<script src="js/patientController.js"></script>
+	<title> Doctor Portal's Home </title>
+</head>
 
-	<body ng-app="myApp" ng-controller="patientController">
+<body ng-app="myApp" ng-controller="patientController">
 
-		<!--Start of Log In page-->
-		<div ng-show="!loggedIn" class="container">
-			<div class="text-center">
-				<h1>Doctor Portal <small>Doctor Portal Login</small></h1>
-			</div>
-			<!--<p>{{test}} + " " + {{users}}</p>-->
-			<form ng-submit="login()" class="form-horizontal" name="logForm" role="form">
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="username">Username:</label>
-					<div class="col-sm-8">
-						<input ng-model="currentUser" type="text" class="form-control" id="username" placeholder="Enter username" required />
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="pwd">Password:</label>
-					<div class="col-sm-8">
-						<input type="password" ng-model="password" class="form-control" id="pwd" placeholder="Enter password" required/>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-8">
-						<div class="checkbox">
-							<label><input ng-model="rememberMe" type="checkbox" /> Remember me</label>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-8">
-						<button ng-click="changeDoctor()"type="submit" class="btn">Log in</button>
-					</div>
-				</div>
-				<div class="col-sm-offset-2 col-sm-8">
-					(Forgot your password!)
-				</div>
-			</form>
+	<!--Start of Log In page-->
+	<div ng-show="!loggedIn" class="container">
+		<div class="text-center">
+			<h1>Doctor Portal <small>Doctor Portal Login</small></h1>
 		</div>
-		<!--End of Log In page-->
-
-		<div ng-show="loggedIn">
-			<!--Nav Information-->
-			<nav ng-show="loggedIn" class="navbar navbar-default">
-				<div class="container-fluid">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="#">
-							<span class="glyphicon glyphicon-th-large"></span> Report System
-						</a>
+		<!--<p>{{test}} + " " + {{users}}</p>-->
+		<form ng-submit="login()" class="form-horizontal" name="logForm" role="form">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="username">Username:</label>
+				<div class="col-sm-8">
+					<input ng-model="currentUser" type="text" class="form-control" id="username" placeholder="Enter username" required />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="pwd">Password:</label>
+				<div class="col-sm-8">
+					<input type="password" ng-model="password" class="form-control" id="pwd" placeholder="Enter password" required/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-8">
+					<div class="checkbox">
+						<label><input ng-model="rememberMe" type="checkbox" /> Remember me</label>
 					</div>
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav navbar-right">
-							<li><a>Welcome Dr. {{currentDoctor.name}}</a></li>
-							<li>
-								<form class="navbar-form navbar-left" role="search">
-									<div class="form-group has-feedback">
-										<input type="text" ng-model="searchVar" class="form-control" placeholder="Search Patient Name" />
-										<i class="glyphicon glyphicon-search form-control-feedback"></i>
-									</div>
-									<!--<button type="submit" data-toggle="modal" data-target="#myModal" class="btn btn-default">Search <span class="glyphicon glyphicon-search"></span> </button>-->
-								</form>
-							</li>
-							<li><a style="cursor: pointer;" ng-click="loggedIn=false">Log out</a></li>
-						</ul>
-					</div><!-- /.navbar-collapse -->
-				</div><!-- /.container-fluid -->
-			</nav>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-8">
+					<button ng-click="changeDoctor()"type="submit" class="btn">Log in</button>
+				</div>
+			</div>
+			<div class="col-sm-offset-2 col-sm-8">
+				(Forgot your password!)
+			</div>
+		</form>
+	</div>
+	<!--End of Log In page-->
 
-			<!--Start of container-->
-			<div class="container">
-				<!--Left Side of the Screen-->
-				<div class="row">
-					<div class="col-sm-5" ng-show="loggedIn">
-						<h1>Waiting List</h1>
+	<div ng-show="loggedIn">
+		<!--Nav Information-->
+		<nav ng-show="loggedIn" class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">
+						<span class="glyphicon glyphicon-th-large"></span> Report System
+					</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a>Welcome Dr. {{currentDoctor.name}}</a></li>
+						<li>
+							<form class="navbar-form navbar-left" role="search">
+								<div class="form-group has-feedback">
+									<input type="text" ng-model="searchVar" class="form-control" placeholder="Search Patient Name" />
+									<i class="glyphicon glyphicon-search form-control-feedback"></i>
+								</div>
+								<!--<button type="submit" data-toggle="modal" data-target="#myModal" class="btn btn-default">Search <span class="glyphicon glyphicon-search"></span> </button>-->
+							</form>
+						</li>
+						<li><a style="cursor: pointer;" ng-click="loggedIn=false">Log out</a></li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
 
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th>PatientID</th>
-									<th>Name</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr style="cursor: pointer;" class="clickable-row" data-toggle="modal" ng-click="changePatient(p);" data-target="#myModal" ng-repeat="p in patients | filter:{name:searchVar}">
-									<td>{{p.patID}}</td>
-									<td><span class="glyphicon glyphicon-user"></span>  {{p.name}}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+		<!--Start of container-->
+		<div class="container">
+			<!--Left Side of the Screen-->
+			<div class="row">
+				<div class="col-sm-3" ng-show="loggedIn">
+					<h1>Waiting List</h1>
 
-					<!--Right Side of the Screen-->
-					<div class="col-sm-7">
-						<h1>Insurance Requests</h2>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>PatientID</th>
+								<th>Name</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr style="cursor: pointer;" class="clickable-row" data-toggle="modal" ng-click="changePatient(p);" data-target="#myModal" ng-repeat="p in patients | filter:{name:searchVar}">
+								<td>{{p.patID}}</td>
+								<td><span class="glyphicon glyphicon-user"></span>  {{p.name}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!--Right Side of the Screen-->
+				<div class="col-sm-9">
+					<h1>Insurance Requests</h2>
 
 
 						<div class="panel-group" id="accordion">
@@ -123,8 +123,9 @@
 								<div class="panel-heading accordion-toggle" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
 									<h4 class="panel-title">
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-											Pending
+											Pending  <span class="badge">{{filterRequests('PENDING')}}</span>
 										</a>
+
 									</h4>
 								</div>
 								<div id="collapseOne" class="panel-collapse collapse">
@@ -141,6 +142,7 @@
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
 											Requested
 										</a>
+										<span class="badge">{{filterRequests('REQUESTED')}}</span>
 									</h4>
 								</div>
 								<div id="collapseFour" class="panel-collapse collapse">
@@ -157,6 +159,7 @@
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
 											Accepted
 										</a>
+										<span class="badge">{{filterRequests('ACCEPTED')}}</span>
 									</h4>
 								</div>
 								<div id="collapseTwo" class="panel-collapse collapse">
@@ -173,6 +176,7 @@
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
 											Rejected
 										</a>
+										<span class="badge">{{filterRequests('REJECTED')}}</span>
 									</h4>
 								</div>
 								<div id="collapseThree" class="panel-collapse collapse">
@@ -190,7 +194,7 @@
 
 			<!-- Modal -->
 			<div class="modal fade" id="myModal" role="dialog">
-				<div class="modal-dialog-md">
+				<div class="modal-dialog modal-lg">
 
 					<!-- Modal content-->
 					<div class="modal-content">
@@ -223,13 +227,14 @@
 
 								</div>
 								<div class="col-sm-7">
-									<h2>Prescribed Medical Acts</h2>
+									<h2>Prescribe New Medical Acts</h2>
 									<table class="table">
 										<thead>
 											<tr>
 												<th>ActID</th>
 												<th>ActName</th>
 												<th>Cost</th>
+												<th>Estimated Reimbursement</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -237,18 +242,29 @@
 												<td>{{act.actID}}</td>
 												<td>{{act.name}}</td>
 												<td>{{act.cost}}</td>
-												<td ng-click="removeMedicalAct($index)"><span class="glyphicon glyphicon-minus"></span></td>
+												<td>{{act.rmb*100}}%</td>
+												<td><button class="btn btn-danger" ng-click="removeMedicalAct($index)"><span class="glyphicon glyphicon-minus"></span></button></td>
 											</tr>
 										</tbody>
 									</table>
 
-									<div class="dropdown">
-								    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Act Type
-								    <span class="caret"></span></button>
-								    <ul class="dropdown-menu">
-								      <li ng-click="addMedicalAct(act.name)" ng-repeat="act in acts | orderBy:cost"><a href="#">{{act.name}}</a></li>
-								    </ul>
-								  </div>
+									<div class="row">
+										<div class="dropdown">
+
+											<button class="btn btn-success dropdown-toggle" style="margin-left: 15px;" type="button" data-toggle="dropdown">Choose Act Type
+												<span class="caret"></span>
+											</button>
+											<button type="button" style="margin-right: 15px;" class="btn btn-success pull-right" ng-click="currentPatient.acts=[]" data-dismiss="modal">Submit</button>
+
+											<ul class="dropdown-menu">
+												<li ng-click="addMedicalAct(act.name)" ng-repeat="act in acts | orderBy:cost"><a href="#">{{act.name}}</a></li>
+											</ul>
+										</div>
+									</div>
+
+
+
+
 									<h2>Past Medical Acts</h2>
 									<table class="table">
 										<thead>
@@ -268,7 +284,7 @@
 												<td>{{act.date}}</td>
 												<td>{{act.docName}}</td>
 												<td>{{act.cost}}</td>
-												<td>{{act.actual_reimb_perc}}</td>
+												<td>{{act.actual_reimb_perc*100}}%</td>
 											</tr>
 										</tbody>
 									</table>
@@ -278,7 +294,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-success pull-center" ng-click="currentPatient.acts=[]" data-dismiss="modal">Submit</button> <!--TODO-->
+
 						</div>
 					</div>
 
@@ -286,4 +302,4 @@
 			</div>
 		</div>
 	</body>
-</html>
+	</html>
