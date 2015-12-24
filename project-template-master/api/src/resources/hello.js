@@ -12,12 +12,40 @@ exports.post = function handler (request, reply) {
 
 exports.login = function handler (request, reply) {
 	reply(bl.login(request.payload.user, request.payload.pass));
-	/*
-	
-	var u = request.payload.user;
-	var p = request.payload.pass;
-	
-	var success = bl.login(u, p);
-	reply({success: success});
-	**/
+}
+
+exports.changepatient = function handler (request, reply) {
+	reply(bl.changepatient(request.payload.patient));
+}
+
+exports.patients = function handler (request, reply) {
+	reply(bl.patients());
+}
+
+exports.doctors = function handler (request, reply) {
+	reply(bl.doctors());
+}
+
+exports.reports = function handler (request, reply) {
+	reply(bl.reports());
+}
+
+exports.acts = function handler (request, reply) {
+	reply(bl.acts());
+}
+
+exports.acts_rmb = function handler (request, reply) {
+	reply(bl.acts_rmb());
+}
+
+exports.requests = function handler (request, reply) {
+	reply(bl.requests());
+}
+
+exports.addmedicalact = function handler (request, reply) {
+	reply(bl.addmedicalact(request.payload.actname, request.payload.currentpatient));
+}
+
+exports.removemedicalact = function handler (request, reply) {
+	reply(bl.removemedicalact(request.payload.actindex, request.payload.currentpatient));
 }

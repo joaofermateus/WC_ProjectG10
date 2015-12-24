@@ -9,11 +9,10 @@ exports.test = function (name) {
 	return 'Goodbye'
 }
 exports.login = function (username, password) {
-	//return username;
-	for(var i = 0; i < doctors.length; i++) {
-		if (doctors[i].user === username && doctors[i].pass === password) {
-			return true;
-		}
-	}
-	return false;
+  doctors.forEach(function (entry) {
+    if (entry.user === username && entry.pass === password) {
+      return true
+    }
+    return false
+  })
 }
