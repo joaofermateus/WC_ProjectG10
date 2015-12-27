@@ -9,13 +9,11 @@ Additional Modules (other than project_template modules)
 MongoDB; https://www.npmjs.com/package/mongodb
 
 ## Initialization Procedure:
-  Initialize RESTful API:
-  Open the 'api' directory in the terminal and type 'npm start' to initialize the web server, the server will be initialized in http://localhost:9000/.
-  ```
-    Note: Running the server will create a MongoDB database called projectG10 inputing all the project data from JSON files. e.g. patients, acts, etc..
-  ```
-  Initialize Client Side Application:
-  Open the 'app' directory in the terminal and type 'npm start' to initialize the web App, the app will be initialized in http://localhost:9090/.
+  ### Initialize RESTful API:
+  - Open the 'api' directory in the terminal and type 'npm start' to initialize the web server, the server will be initialized in http://localhost:9000/.
+    - *Note: Running the server will create a MongoDB database called projectG10 inputing all the project data from JSON files. e.g. patients, acts, etc..*
+  ###Initialize Client Side Application:
+  - Open the 'app' directory in the terminal and type 'npm start' to initialize the web App, the app will be initialized in http://localhost:9090/.
 
 ## Project assignment
 
@@ -71,7 +69,7 @@ api/src
 └── routes
     └── hello.js
 
-    ```
+```
 ## Business logic
 
 ```
