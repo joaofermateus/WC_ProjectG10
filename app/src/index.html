@@ -10,13 +10,11 @@
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
-	<script src="js/myApp.js"></script>
-	<script src="js/patientController.js"></script>
+	<script src="js/app.js"></script>
 	<title> Doctor Portal's Home </title>
 </head>
 
-<body ng-app="myApp" ng-controller="patientController">
-
+<body ng-app="app" ng-controller="patientController">
 	<!--Start of Log In page-->
 	<div ng-show="!loggedIn" class="container" align="center">
 		<div class="text-center">
@@ -24,33 +22,30 @@
 			<h2 style="color: grey;">Doctor Portal Login</h2>
 		</div>
 		<!--<p>{{test}} + " " + {{users}}</p>-->
-		<form ng-submit="login()" class="form-horizontal" name="logForm" role="form">
+		<form ng-submit="login(username,password)" class="form-horizontal" name="logForm" role="form">
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="username">Username:</label>
-				<div class="col-sm-8">
-					<input ng-model="currentUser" type="text"	 class="form-control" id="username" placeholder="Enter username" required />
+				<label class="control-label col-sm-4" for="username">Username:</label>
+				<div class="col-sm-4">
+					<input ng-model="currentUser" ng-click="loginError = false" type="text"	 class="form-control" id="username" placeholder="Enter username" required />
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="pwd">Password:</label>
-				<div class="col-sm-8">
-					<input type="password" ng-model="password" class="form-control" id="pwd" placeholder="Enter password" required/>
+				<label class="control-label col-sm-4" for="pwd">Password:</label>
+				<div class="col-sm-4">
+					<input type="password" ng-click="loginError = false" ng-model="password" class="form-control" id="pwd" placeholder="Enter password" required/>
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
-					<div class="checkbox">
-						<label><input ng-model="rememberMe" type="checkbox" /> Remember me</label>
-					</div>
+				<div class="col-sm-offset-4 col-sm-4">
+					<button ng-click="changeDoctor(); descriptiveRequests();"type="submit" class="btn btn-primary">Log in</button>
 				</div>
 			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
-					<button ng-click="changeDoctor()"type="submit" class="btn">Log in</button>
+			<div ng-show="loginError" class="container" align="center">
+			<div class="col-sm-offset-4 col-sm-4">
+				<div class="panel panel-danger">
+					<div class="panel-heading">Username or Password wrong!</div>
 				</div>
 			</div>
-			<div class="col-sm-offset-2 col-sm-8">
-				(Forgot your password!)
 			</div>
 		</form>
 	</div>
@@ -85,7 +80,7 @@
 								<!--<button type="submit" data-toggle="modal" data-target="#myModal" class="btn btn-default">Search <span class="glyphicon glyphicon-search"></span> </button>-->
 							</form>
 						</li>
-						<li><a style="cursor: pointer;" ng-click="loggedIn=false">Log out</a></li>
+						<li><a style="cursor: pointer;" ng-click="loggedIn=false; currentUser=''; password=''">Log out</a></li>
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
@@ -116,75 +111,135 @@
 
 				<!--Right Side of the Screen-->
 				<div class="col-sm-9">
-					<h1>Insurance Requests</h2>
+					<h1>Insurance Requests <button class="btn" ng-click="descriptiveRequests()"><span class="glyphicon glyphicon-refresh"></i></span></button></h2>
 
 
 						<div class="panel-group" id="accordion">
 							<div class="panel panel-default">
 								<div class="panel-heading accordion-toggle" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-									<h4 class="panel-title">
+									<h2 class="panel-title">
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-											Pending  <span class="badge">{{filterRequests('PENDING')}}</span>
+											Pending  <span class="label label-warning">{{filterRequests('PENDING', currentDoctor.docID)}}</span>
 										</a>
 
-									</h4>
+									</h2>
 								</div>
 								<div id="collapseOne" class="panel-collapse collapse">
 									<div class="panel-body">
-										<ul class="list-group" >
-											<li ng-repeat="r in requests | filter:{status:'PENDING'}" class="list-group-item">ReqID: {{r.reqID}} RepID: {{r.repID}} Status: {{r.status}}</li>
-										</ul>
+										<table class="table">
+											<thead>
+												<tr>
+													<th>RequestID</th>
+													<th>Act</th>
+													<th>Date</th>
+													<th>Patient Name</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr style="cursor: pointer;" ng-repeat="r in displayReports.slice().reverse() | filter:{status:'PENDING'} | filter:{docID:currentDoctor.docID} | orderBy:'r.reqID'">
+													<td>{{r.reqID}}</td>
+													<td>{{r.actName}}</td>
+													<td>{{r.date}}</td>
+													<td>{{r.patName}}</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
 								<div class="panel-heading accordion-toggle" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-									<h4 class="panel-title">
+									<h2 class="panel-title">
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
 											Requested
 										</a>
-										<span class="badge">{{filterRequests('REQUESTED')}}</span>
-									</h4>
+										<span class="label label-primary">{{filterRequests('REQUESTED', currentDoctor.docID)}}</span>
+									</h2>
 								</div>
 								<div id="collapseFour" class="panel-collapse collapse">
 									<div class="panel-body">
-										<ul class="list-group" >
-											<li ng-repeat="r in requests | filter:{status:'REQUESTED'}" class="list-group-item">ReqID: {{r.reqID}} RepID: {{r.repID}} Status: {{r.status}}</li>
-										</ul>
+										<table class="table">
+											<thead>
+												<tr>
+													<th>RequestID</th>
+													<th>Act</th>
+													<th>Date</th>
+													<th>Patient Name</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr style="cursor: pointer;" ng-repeat="r in displayReports.slice().reverse() | filter:{status:'REQUESTED'} | filter:{docID:currentDoctor.docID} | orderBy:'r.reqID'">
+													<td>{{r.reqID}}</td>
+													<td>{{r.actName}}</td>
+													<td>{{r.date}}</td>
+													<td>{{r.patName}}</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
 								<div class="panel-heading accordion-toggle" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-									<h4 class="panel-title">
+									<h2 class="panel-title">
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
 											Accepted
 										</a>
-										<span class="badge">{{filterRequests('ACCEPTED')}}</span>
-									</h4>
+										<span class="label label-success">{{filterRequests('ACCEPTED', currentDoctor.docID)}}</span>
+									</h2>
 								</div>
 								<div id="collapseTwo" class="panel-collapse collapse">
 									<div class="panel-body">
-										<ul class="list-group" >
-											<li ng-repeat="r in requests | filter:{status:'ACCEPTED'}" class="list-group-item">ReqID: {{r.reqID}} RepID: {{r.repID}} Status: {{r.status}}</li>
-										</ul>
+										<table class="table">
+											<thead>
+												<tr>
+													<th>RequestID</th>
+													<th>Act</th>
+													<th>Date</th>
+													<th>Patient Name</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr style="cursor: pointer;" ng-repeat="r in displayReports.slice().reverse() | filter:{status:'ACCEPTED'} | filter:{docID:currentDoctor.docID} | orderBy:'r.reqID'">
+													<td>{{r.reqID}}</td>
+													<td>{{r.actName}}</td>
+													<td>{{r.date}}</td>
+													<td>{{r.patName}}</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
 								<div class="panel-heading accordion-toggle" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-									<h4 class="panel-title">
+									<h2 class="panel-title">
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
 											Rejected
 										</a>
-										<span class="badge">{{filterRequests('REJECTED')}}</span>
-									</h4>
+										<span class="label label-danger">{{filterRequests('REJECTED', currentDoctor.docID)}}</span>
+									</h2>
 								</div>
 								<div id="collapseThree" class="panel-collapse collapse">
 									<div class="panel-body">
-										<ul class="list-group" >
-											<li ng-repeat="r in requests | filter:{status:'REJECTED'}" class="list-group-item">ReqID: {{r.reqID}} RepID: {{r.repID}} Status: {{r.status}}</li>
-										</ul>
+										<table class="table">
+											<thead>
+												<tr>
+													<th>RequestID</th>
+													<th>Act</th>
+													<th>Date</th>
+													<th>Patient Name</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr style="cursor: pointer;" ng-repeat="r in displayReports.slice().reverse() | filter:{status:'REJECTED'} | filter:{docID:currentDoctor.docID} | orderBy:'r.reqID'">
+													<td>{{r.reqID}}</td>
+													<td>{{r.actName}}</td>
+													<td>{{r.date}}</td>
+													<td>{{r.patName}}</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
@@ -194,6 +249,25 @@
 			</div>
 
 			<!-- Modal -->
+			<div class="modal fade" id="confirmModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Confirm Deletion</h4>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete {{currentPatient.name}}'s profile?</p>
+              <p style="color: red;">This action is irreversible!</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" ng-click="deletePatient()" class="btn btn-danger" data-dismiss="modal">Yes, I want to delete it</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 			<div class="modal fade" id="myModal" role="dialog">
 				<div class="modal-dialog modal-lg">
 
@@ -201,7 +275,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Create Medical Act</h4>
+							<h2 class="modal-title">Create Medical Act</h2>
 						</div>
 						<div class="modal-body">
 							<div class="row">
@@ -225,6 +299,7 @@
 											<td>{{currentPatient.policy_type}}</td>
 										</tr>
 									</table>
+									<button type="button" class="btn btn-lg btn-block btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#confirmModal">Delete Patient</button>
 
 								</div>
 								<div class="col-sm-9">
@@ -244,7 +319,7 @@
 												<td>{{act.name}}</td>
 												<td>{{act.cost}}</td>
 												<td>{{act.rmb*100}}%</td>
-												<td><button class="btn btn-danger" ng-click="removeMedicalAct($index)"><span class="glyphicon glyphicon-minus"></span></button></td>
+												<td><button class="btn btn-danger" ng-click="removeMedicalAct($index)"><span class="glyphicon glyphicon-remove"></span></button></td>
 											</tr>
 										</tbody>
 									</table>
@@ -255,7 +330,7 @@
 											<button class="btn btn-success dropdown-toggle" style="margin-left: 15px;" type="button" data-toggle="dropdown">Choose Act Type
 												<span class="caret"></span>
 											</button>
-											<button type="button" style="margin-right: 15px;" class="btn btn-success pull-right" ng-click="currentPatient.acts=[]" data-dismiss="modal">Submit</button>
+											<button type="button" style="margin-right: 15px;" class="btn btn-success pull-right" ng-click="submitReport(); currentPatient.acts=[]; descriptiveRequests()" data-dismiss="modal">Submit</button>
 
 											<ul class="dropdown-menu">
 												<li ng-click="addMedicalAct(act.name)" ng-repeat="act in acts | orderBy:cost"><a href="#">{{act.name}}</a></li>
