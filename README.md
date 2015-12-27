@@ -11,7 +11,9 @@ MongoDB; https://www.npmjs.com/package/mongodb
 ## Initialization Procedure:
   Initialize RESTful API:
   Open the 'api' directory in the terminal and type 'npm start' to initialize the web server, the server will be initialized in http://localhost:9000/.
+  ```
     Note: Running the server will create a MongoDB database called projectG10 inputing all the project data from JSON files. e.g. patients, acts, etc..
+  ```
   Initialize Client Side Application:
   Open the 'app' directory in the terminal and type 'npm start' to initialize the web App, the app will be initialized in http://localhost:9090/.
 
@@ -19,6 +21,7 @@ MongoDB; https://www.npmjs.com/package/mongodb
 
 ##Client Side Application directory
 
+```
 app/src
 .
 ├── css
@@ -39,8 +42,10 @@ app/src
     ├── app.js
     └── bl.js
 
+```
 ##RESTful API
 
+```
 api/src
 .
 ├── data
@@ -66,10 +71,14 @@ api/src
 └── routes
     └── hello.js
 
+    ```
 ## Business logic
 
+```
 bl/src
 .
 ├── index.js
 ├── LICENSE
 ├── README.md
+
+```
