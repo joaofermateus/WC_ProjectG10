@@ -104,7 +104,7 @@ exports.submitReport = function handler (request, reply) {
           for (var i = 0; i < request.payload.acts.length; i++) {
             repID++;
             reqID++;
-            console.log(repID);
+            //console.log(repID);
             reports.insert(
             { "repID":repID , "date" : today, "docID" : request.payload.docID, "patID" : request.payload.patID, "actID": request.payload.acts[i].actID, "actual_reimb_perc" : ""}
             )

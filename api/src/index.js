@@ -7,17 +7,17 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 var jsonDir='./src/data/';
 var files = fs.readdirSync(jsonDir);
-console.log(files);
+//console.log(files);
 for (var i = 0; i < files.length; i++) {
   if (files[i].split('.')[1] == 'json') {
     exec('mongoimport --db projectG10 --collection ' + files[i].split('.')[0] + ' --drop --type json --jsonArray ' + jsonDir + files[i], function(error, stdout, stderr) {
-      console.log('stdout: ' + stdout);
-      console.log('stderr: ' + stderr);
+      //console.log('stdout: ' + stdout);
+      //console.log('stderr: ' + stderr);
       if (error !== null) {
-        console.log('exec error: ' + error);
+        //console.log('exec error: ' + error);
       }
     });
-    console.log(files[i]);
+    //console.log(files[i]);
   }
 }
 

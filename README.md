@@ -12,8 +12,8 @@ MongoDB; https://www.npmjs.com/package/mongodb
 
 Initialization Procedure:
   Initialize server and app;
-  Open the 'api' directory in the terminal and type 'npm start' to initialize the web server, the server will be initialized in http://localhost:9000/. 
-    Note: Running the server will create a MongoDB database called projectG10 inputing all the project data. e.g. patients, acts
+  Open the 'api' directory in the terminal and type 'npm start' to initialize the web server, the server will be initialized in http://localhost:9000/.
+    Note: Running the server will create a MongoDB database called projectG10 inputing all the project data from JSON files. e.g. patients, acts, etc..
   Open the 'app' directory in the terminal and type 'npm start' to initialize the web App, the app will be initialized in http://localhost:9090/.
 
 ## Project assignment
