@@ -1,9 +1,20 @@
-SISE-CWEB Project Template
+Web Computation Group 10 Project
+Albertina Soares N.01, David Sousa N08, João Mateus N20
 ==========================
 
 [![](https://img.shields.io/badge/TÉCNICO-LISBOA-blue.svg?style=flat-square)](http://tecnico.ulisboa.pt/)
 
 > This repo contains a template and instructions on how to submit the Project for the SISE-CWEB Course
+
+Requirements:
+Additional Modules (other than project_template modules)
+MongoDB; https://www.npmjs.com/package/mongodb
+
+Initialization Procedure:
+  Initialize server and app;
+  Open the 'api' directory in the terminal and type 'npm start' to initialize the web server, the server will be initialized in http://localhost:9000/. 
+    Note: Running the server will create a MongoDB database called projectG10 inputing all the project data. e.g. patients, acts
+  Open the 'app' directory in the terminal and type 'npm start' to initialize the web App, the app will be initialized in http://localhost:9090/.
 
 ## Project assignment
 
@@ -158,7 +169,7 @@ If you are unfamiliar to git, you can, similar to the exercises in lab 1 and 2, 
 
 ```bash
 $ npm install -g git-it
-# ... 
+# ...
 $ git-it
 ```
 
